@@ -3,7 +3,7 @@ import { AppError } from '../utils/app-error';
 import { logger } from '../utils/logger';
 
 export class AppointmentService {
-  getRepository(orm: OrmType) {
+  private getRepository(orm: OrmType) {
     return repositoryFactory.appointment(orm);
   }
 

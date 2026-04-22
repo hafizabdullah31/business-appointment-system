@@ -6,17 +6,19 @@ import employeeDetailRoutes from './routes/employee-detail.routes';
 import clientDetailRoutes from './routes/client-detail.routes';
 import appointmentRoutes from './routes/appointment.routes';
 import { errorHandler } from './middlewares/error.middleware';
+import { apiRateLimit, authRateLimit } from './middlewares/rate-limit.middleware';
 import { errorResponse } from './utils/response';
 
 const app = express();
 
 app.use(express.json());
+app.use(apiRateLimit);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ success: true, message: 'Server is healthy', data: null });
 });
 
-app.use('/auth', authRoutes);
+app.use('/auth', authRateLimit, authRoutes);
 app.use('/business', businessRoutes);
 app.use('/users', userRoutes);
 app.use('/employee-details', employeeDetailRoutes);
